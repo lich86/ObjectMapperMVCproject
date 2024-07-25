@@ -15,16 +15,10 @@ public class TestData {
     public static final String productURL = "/api/product";
     public static final String customerJson1 = "{\"firstName\":\"John\",\"lastName\":\"Doe\","
         + "\"email\":\"john.doe@example.com\",\"password\":\"securePassword123\"}";
-    public static final String customerJson2 = "{\"firstName\":\"Jane\",\"lastName\":\"Doe\","
-        + "\"email\":\"jane.doe@example.com\",\"password\":\"securePassword123\"}";
     public static final String productJson1 = "{\"name\":\"Fan\",\"description\":\"desc\",\"price\":300,\"stock\":18}";
-    public static final String productJson2 = "{\"name\":\"Iphone\",\"price\":3000,\"stock\":1}";
     public static final String orderJson1 = "{\"customer\":{\"id\":1},\"address\":{\"apartment\":18,\"home\":99,"
         + "\"street\":\"MainSt\",\"city\":\"Anytown\"},\"products\":[{\"id\":3}],"
         + "\"sum\":300,\"status\":\"IN_PROGRESS\"}";
-    public static final String orderJson2 = "{\"customer\":{\"id\":2},\"address\":{\"apartment\":18,\"home\":99,"
-        + "\"street\":\"MainSt\",\"city\":\"Anytown\"},\"products\":[{\"id\":3}],"
-        + "\"sum\":300,\"status\":\"PAID\"}";
     public static final Customer customer1 = new Customer();
     public static final Customer customer2 = new Customer();
     public static final Product product1 = new Product();
