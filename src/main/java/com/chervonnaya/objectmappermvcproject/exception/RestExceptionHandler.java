@@ -1,11 +1,9 @@
 package com.chervonnaya.objectmappermvcproject.exception;
 
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.time.LocalDateTime.now;
 
@@ -31,20 +28,6 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
-        String errorMessage = e.getBindingResult().getAllErrors()
-            .stream()
-            .map(DefaultMessageSourceResolvable::getDefaultMessage)
-            .collect(Collectors.joining(", "));
-        ErrorResponse response = new ErrorResponse(
-            String.format("Invalid JSON input: %s", errorMessage),
-            HttpStatus.BAD_REQUEST,
-            now()
-        );
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -54,6 +37,9 @@ public class RestExceptionHandler {
         if(e.getMessage()
             .contains("Cannot deserialize value of type `com.chervonnaya.orderrestapi.model.enums.Status`")) {
             errorMessage = "Please provide correct status value";
+        } else if (e.getMessage()
+            .contains("Required request body is missing")) {
+            errorMessage = "Required request body is missing";
         } else {
             errorMessage = e.getMessage();
         }

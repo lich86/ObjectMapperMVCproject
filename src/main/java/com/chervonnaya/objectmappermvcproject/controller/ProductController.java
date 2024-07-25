@@ -4,6 +4,7 @@ import com.chervonnaya.objectmappermvcproject.model.Product;
 import com.chervonnaya.objectmappermvcproject.service.impl.ProductServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ public class ProductController {
     public ProductController(ProductServiceImpl productService, ObjectMapper mapper) {
         this.productService = productService;
         this.mapper = mapper;
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     @GetMapping(value = "/{id}")

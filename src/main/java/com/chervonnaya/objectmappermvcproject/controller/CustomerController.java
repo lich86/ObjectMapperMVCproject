@@ -4,6 +4,7 @@ import com.chervonnaya.objectmappermvcproject.model.Customer;
 import com.chervonnaya.objectmappermvcproject.service.impl.CustomerServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ public class CustomerController {
     public CustomerController(CustomerServiceImpl customerService, ObjectMapper mapper) {
         this.customerService = customerService;
         this.mapper = mapper;
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     @GetMapping(value = "/{id}")
@@ -43,6 +45,7 @@ public class CustomerController {
 
     @PostMapping
     public String createCustomer(@RequestBody String json) throws JsonProcessingException {
+
         Customer customer = mapper.readValue(json, Customer.class);
         Customer savedCustomer = customerService.save(customer);
         return mapper.writeValueAsString(savedCustomer);

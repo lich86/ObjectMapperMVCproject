@@ -1,7 +1,6 @@
 package com.chervonnaya.objectmappermvcproject.model;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -30,6 +29,7 @@ import java.util.List;
 public class Order extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("orders")
     Customer customer;
 
     @Embedded
@@ -40,7 +40,7 @@ public class Order extends BaseEntity {
         joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
-    @JsonBackReference
+    @JsonIgnoreProperties("orders")
     List<Product> products;
 
     @Column(name="sum")

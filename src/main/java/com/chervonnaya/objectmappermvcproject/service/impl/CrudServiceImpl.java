@@ -7,7 +7,9 @@ import com.chervonnaya.objectmappermvcproject.model.BaseEntity;
 import com.chervonnaya.objectmappermvcproject.repository.IRepository;
 import com.chervonnaya.objectmappermvcproject.service.CrudService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +52,13 @@ public class CrudServiceImpl<E extends BaseEntity, R extends IRepository<E>> imp
             return entity;
         } catch (Exception ex) {
             log.error(String.format("Unable to save %s", this.genericType.getSimpleName().toLowerCase()));
-            throw new SaveEntityException(this.genericType.getSimpleName(), ex.getMessage());
+            String errorMessage;
+            if (ex instanceof PropertyValueException || ex instanceof DataIntegrityViolationException) {
+                errorMessage = "Please provide correct data";
+            } else {
+                errorMessage = ex.getMessage();
+            }
+            throw new SaveEntityException(this.genericType.getSimpleName(), errorMessage);
         }
     }
 

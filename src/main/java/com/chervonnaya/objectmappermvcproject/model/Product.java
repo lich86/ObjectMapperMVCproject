@@ -1,6 +1,6 @@
 package com.chervonnaya.objectmappermvcproject.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,6 +41,6 @@ public class Product extends BaseEntity {
         joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id")
     )
-    @JsonBackReference
+    @JsonIgnore
     List<Order> orders;
 }

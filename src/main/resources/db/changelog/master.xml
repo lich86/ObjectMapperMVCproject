@@ -51,8 +51,8 @@
             <column name="status" type="SMALLINT"/>
             <column name="address_city" type="VARCHAR(255)"/>
             <column name="address_street" type="VARCHAR(255)"/>
-            <column name="address_home" type="VARCHAR(255)"/>
-            <column name="address_apartment" type="VARCHAR(255)"/>
+            <column name="address_home" type="INT"/>
+            <column name="address_apartment" type="INT"/>
         </createTable>
     </changeSet>
     <changeSet id="5" author="lich">
